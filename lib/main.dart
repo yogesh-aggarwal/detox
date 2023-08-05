@@ -1,9 +1,9 @@
 import 'package:detox/core/firebase_options.dart';
 import 'package:detox/providers/user.dart';
-import 'package:detox/widgets/screens/analysis.dart';
-import 'package:detox/widgets/screens/login.dart';
-import 'package:detox/widgets/screens/settings.dart';
-import 'package:detox/widgets/screens/tracker.dart';
+import 'package:detox/widgets/screens/analysis/analysis.dart';
+import 'package:detox/widgets/screens/auth/login.dart';
+import 'package:detox/widgets/screens/settings/settings.dart';
+import 'package:detox/widgets/screens/tracker/tracker.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
