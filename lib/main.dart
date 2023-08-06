@@ -1,4 +1,7 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:detox/core/firebase_options.dart';
+import 'package:detox/core/logging.dart';
+import 'package:detox/core/monitor.dart';
 import 'package:detox/providers/usage.dart';
 import 'package:detox/providers/user.dart';
 import 'package:detox/widgets/screens/analysis/analysis.dart';
@@ -11,9 +14,28 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+void scheduleBackgroundTask() async {
+  await AndroidAlarmManager.initialize();
+
+  await AndroidAlarmManager.cancel(0);
+  await AndroidAlarmManager.periodic(
+    Duration(seconds: 10),
+    0,
+    monitor,
+    exact: true,
+    allowWhileIdle: true,
+    rescheduleOnReboot: true,
+    wakeup: true,
+  );
+
+  logger.i("Background task scheduled");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  scheduleBackgroundTask();
 
   runApp(
     MultiProvider(

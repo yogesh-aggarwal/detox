@@ -23,8 +23,6 @@ class UsageProvider with ChangeNotifier {
       return;
     }
 
-    print(user.trackedAppPackages);
-
     _listener = usagesColl
         .where("createdBy", isEqualTo: userID)
         .where("packageName", whereIn: user.trackedAppPackages)

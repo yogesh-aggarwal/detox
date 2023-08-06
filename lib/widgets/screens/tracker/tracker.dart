@@ -1,4 +1,5 @@
 import 'package:app_usage/app_usage.dart';
+import 'package:detox/core/logging.dart';
 import 'package:detox/providers/usage.dart';
 import 'package:detox/providers/user.dart';
 import 'package:detox/types/usage.dart';
@@ -22,20 +23,27 @@ class _TrackerScreenState extends State<TrackerScreen> {
     context
         .read<UsageProvider>()
         .listen(context.read<UserProvider>().user!.trackedAppPackages);
+
+    final trackedAppPackages =
+        context.read<UserProvider>().user!.trackedAppPackages;
+    getUsageStats(trackedAppPackages);
   }
 
-  void getUsageStats() async {
+  void getUsageStats(List<String> trackingPackages) async {
     try {
       DateTime endDate = DateTime.now();
       DateTime startDate = endDate.subtract(Duration(hours: 1));
       List<AppUsageInfo> infoList =
           await AppUsage().getAppUsage(startDate, endDate);
+      var filtered = infoList
+          .where((element) => trackingPackages.contains(element.packageName));
 
-      for (var info in infoList) {
+      for (var info in filtered) {
+        logger.i(info.toString());
         print(info.toString());
       }
     } on AppUsageException catch (exception) {
-      print(exception);
+      logger.e(exception);
     }
   }
 

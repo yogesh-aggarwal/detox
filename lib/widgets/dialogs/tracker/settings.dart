@@ -28,27 +28,11 @@ class _TrackerSettingsState extends State<TrackerSettings> {
     setState(() {
       _apps = apps;
     });
-
-    // try {
-    //   DateTime endDate = DateTime.now();
-    //   DateTime startDate = endDate.subtract(Duration(hours: 1));
-    //   List<AppUsageInfo> infoList =
-    //       await AppUsage().getAppUsage(startDate, endDate);
-    //   setState(() => _infos = infoList);
-
-    //   for (var info in infoList) {
-    //     print(info.toString());
-    //   }
-    // } on AppUsageException catch (exception) {
-    //   print(exception);
-    // }
   }
 
   @override
   Widget build(BuildContext context) {
     final trackedApps = context.watch<UserProvider>().user?.trackedAppPackages;
-
-    print(trackedApps);
 
     if (trackedApps == null) {
       return const Center(child: CircularProgressIndicator());
