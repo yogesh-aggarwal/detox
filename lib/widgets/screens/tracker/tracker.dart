@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:app_usage/app_usage.dart';
-import 'package:installed_apps/app_info.dart';
-import 'package:installed_apps/installed_apps.dart';
+import 'package:detox/providers/usage.dart';
+import 'package:detox/providers/user.dart';
+import 'package:detox/types/usage.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TrackerScreen extends StatefulWidget {
   const TrackerScreen({super.key});
@@ -11,27 +13,23 @@ class TrackerScreen extends StatefulWidget {
 }
 
 class _TrackerScreenState extends State<TrackerScreen> {
-  List<AppUsageInfo> _infos = [];
+  List<Usage>? _usages;
 
   @override
   void initState() {
     super.initState();
 
-    getUsageStats();
+    context
+        .read<UsageProvider>()
+        .listen(context.read<UserProvider>().user!.trackedAppPackages);
   }
 
   void getUsageStats() async {
-    List<AppInfo> apps = await InstalledApps.getInstalledApps(true, true);
-    for (var app in apps) {
-      print("${app.name} ${app.packageName}");
-    }
-
     try {
       DateTime endDate = DateTime.now();
       DateTime startDate = endDate.subtract(Duration(hours: 1));
       List<AppUsageInfo> infoList =
           await AppUsage().getAppUsage(startDate, endDate);
-      setState(() => _infos = infoList);
 
       for (var info in infoList) {
         print(info.toString());
@@ -43,6 +41,16 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final usages = context.watch<UsageProvider>().usages;
+
+    if (usages == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (usages.isEmpty) {
+      return const Center(child: Text("No usages yet"));
+    }
+
     return const Placeholder();
   }
 }

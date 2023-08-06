@@ -14,7 +14,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "696056247875-bl2qgrhprtpq2t4gqt6h6lk16bn6ot05.apps.googleusercontent.com",
+          "client_id": "696056247875-f6btfcujqagl4espkn09etvnen63eqvd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.yogeshaggarwal.detox",
+            "certificate_hash": "f3988988c56e17e2188d14d45ea08bad9971c493"
+          }
+        },
+        {
+          "client_id": "696056247875-htpqc2fgce2amvf9di1itemuh6jon3o6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.yogeshaggarwal.detox",
+            "certificate_hash": "724168e9a6aa11bd11907a0cf75184d535be17e3"
+          }
+        },
+        {
+          "client_id": "696056247875-2cdmqj4uvncggg99ptk7j2vtpdv5b4j2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +43,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "696056247875-bl2qgrhprtpq2t4gqt6h6lk16bn6ot05.apps.googleusercontent.com",
+              "client_id": "696056247875-2cdmqj4uvncggg99ptk7j2vtpdv5b4j2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

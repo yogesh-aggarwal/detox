@@ -5,12 +5,15 @@ class User {
   String dp;
   String? phoneNumber;
 
+  List<String> trackedAppPackages;
+
   User({
     required this.id,
     required this.name,
     required this.email,
     required this.dp,
     required this.phoneNumber,
+    required this.trackedAppPackages,
   });
 
   String get initials {
@@ -25,16 +28,6 @@ class User {
     return initials;
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'dp': dp,
-      'phoneNumber': phoneNumber,
-    };
-  }
-
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'],
@@ -42,6 +35,18 @@ class User {
       email: map['email'],
       dp: map['dp'],
       phoneNumber: map['phoneNumber'],
+      trackedAppPackages: List<String>.from(map['trackedAppPackages']),
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'dp': dp,
+      'phoneNumber': phoneNumber,
+      'trackedAppPackages': trackedAppPackages,
+    };
   }
 }

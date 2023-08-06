@@ -35,13 +35,39 @@ class UserProvider with ChangeNotifier {
           dp: user.photoURL ?? "https://picsum.photos/200",
           email: user.email ?? "",
           phoneNumber: user.phoneNumber,
+          trackedAppPackages: [],
         );
         notifyListeners();
-        onUserAvailable();
+
+        try {
+          this.user =
+              User.fromMap((await usersColl.doc(user.uid).get()).data() ?? {});
+          notifyListeners();
+          onUserAvailable();
+        } catch (e) {
+          print("User not found, creating one");
+        }
 
         await usersColl.doc(user.uid).set(this.user!.toMap());
+        notifyListeners();
         listen(user.uid);
       }
     });
+  }
+
+  addTrackedApp(String packageName) async {
+    if (user == null) return;
+
+    user!.trackedAppPackages.add(packageName);
+    await usersColl.doc(user!.id).update(user!.toMap());
+    notifyListeners();
+  }
+
+  removeTrackedApp(String packageName) async {
+    if (user == null) return;
+
+    user!.trackedAppPackages.remove(packageName);
+    await usersColl.doc(user!.id).update(user!.toMap());
+    notifyListeners();
   }
 }

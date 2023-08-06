@@ -1,4 +1,5 @@
 import 'package:detox/core/firebase_options.dart';
+import 'package:detox/providers/usage.dart';
 import 'package:detox/providers/user.dart';
 import 'package:detox/widgets/screens/analysis/analysis.dart';
 import 'package:detox/widgets/screens/auth/login.dart';
@@ -18,6 +19,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => UsageProvider()),
       ],
       child: App(),
     ),
@@ -67,15 +69,22 @@ class _DetoxState extends State<Detox> {
     super.initState();
 
     context.read<UserProvider>().initAuth(
-          onUserAvailable: () {},
-        );
+      onUserAvailable: () {
+        context
+            .read<UsageProvider>()
+            .listen(context.read<UserProvider>().user!.trackedAppPackages);
+      },
+    );
 
     context.read<UserProvider>().addListener(() {
-      if (context.read<UserProvider>().user == null) {
+      final user = context.read<UserProvider>().user;
+      if (user == null) {
         setState(() {
           _selectedIndex = 0;
         });
+        return;
       }
+      context.read<UsageProvider>().listen(user.trackedAppPackages);
     });
   }
 

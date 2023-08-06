@@ -10,4 +10,4 @@ final auth = FirebaseAuth.instance;
 final firestore = FirebaseFirestore.instance;
 
 final usersColl = firestore.collection('Users');
-final timeTracksColl = firestore.collection('Time Tracks');
+final usagesColl = firestore.collection('Usages');

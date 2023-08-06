@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:detox/core/auth.dart';
 import 'package:detox/core/firebase.dart';
 import 'package:detox/providers/user.dart';
+import 'package:detox/widgets/dialogs/tracker/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -63,6 +64,13 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
         SizedBox(height: 32),
+        ListTile(
+          leading: Icon(Icons.apps),
+          title: Text('Tracked apps'),
+          onTap: () async {
+            showTrackerSettingsBottomSheet(context);
+          },
+        ),
         ListTile(
           leading: Icon(Icons.person),
           title: Text('Switch accounts'),
